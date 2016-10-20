@@ -1,0 +1,112 @@
+.notes {
+  text-align: center;
+  font-size: 18px;
+  color: #ffb300; }
+  .notes span {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 0 5px; }
+
+.statistic-area {
+  margin-top: 20px; }
+  .statistic-area h3 {
+    font-size: 18px;
+    text-align: center; }
+
+.statistic {
+  display: inline-block; }
+
+.top10 {
+  display: inline-block;
+  text-align: center;
+  width: 220px;
+  margin-top: 20px;
+  vertical-align: top; }
+  .top10 h3 {
+    font-size: 18px; }
+
+.village-top10 ul {
+  height: 280px;
+  overflow-x: auto;
+  width: 82px;
+  padding-left: 47px; }
+
+.top5 {
+  display: block; }
+
+#details {
+  position: absolute;
+  width: 300px;
+  top: 20px;
+  right: 20px;
+  z-index: 1; }
+
+#details p.lead {
+  display: none; }
+
+.tooltip {
+  position: absolute;
+  width: 170px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none; }
+
+.tooltip.hidden {
+  display: none; }
+
+.tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 20px; }
+
+.axis {
+  font-size: 14px;
+  fill: #FFF; }
+
+.axis path {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2; }
+
+.domain, .tick line {
+  stroke: gray;
+  stroke-width: 1; }
+
+.distribution-Statistics2 text {
+  /*display: none;*/ }
+
+/* leaflet */
+.leaflet-bottom .leaflet-control-attribution {
+  display: none; }
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px; }
+
+.info h4 {
+  margin: 0 0 5px;
+  color: #777; }
+
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555; }
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7; }

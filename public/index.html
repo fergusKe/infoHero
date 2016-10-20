@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index.css">
+  <title>家防案件預警及風險管理系統</title>
+  <script src="//codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="js/TweenMax.min.js"></script>
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <!-- <script src="js/d3.v3.js"></script> -->
+  <!-- <script src="js/labeler.js"></script> -->
+  <!-- <script src="js/d3.geo.projection.v0.min.js"></script> -->
+  <script src="js/topojson.v1.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script> -->
+  <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+  <script src="js/radar-chart.js"></script>
+  <!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
+  <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+  <script src="js/index.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1 class="h-title">
+        <a href="index.html">台北市家庭暴力防治 受害者熱區地圖</a>
+      </h1>
+      <div class="nav">
+        <ul class="navCont">
+          <li class="nav-title1 nav-title">
+            <a href="javascript:;">圖表樣式</a>
+          </li>
+          <li class="nav-title2 nav-title">
+            <a href="javascript:;">案件類型</a>
+          </li>
+          <li class="nav-title3 nav-title">
+            <a href="javascript:;">行政區</a>
+          </li>
+          <li class="nav-title4 nav-title">
+            <a href="javascript:;">里</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main">
+      <div class="nav-dropdown">
+        <div class="nav-title1-list-box nav-list-box chartType">
+          <ul class="nav-title1-list nav-list">
+            <li name="受害者地圖"><a href="index2.html">受害者地圖</a></li>
+            <li name="親密關係風險地圖"><a href="javascript:;">親密關係風險地圖</a></li>
+          </ul>
+        </div>
+        <div class="nav-title2-list-box nav-list-box caseCategory">
+          <ul class="nav-title2-list nav-list">
+            <li name="各里總案件數"><a href="javascript:;">全部</a></li>
+            <li name="老人保護"><a href="javascript:;">老人保護</a></li>
+            <li name="兒少保護"><a href="javascript:;">兒少保護</a></li>
+            <li name="親密關係"><a href="javascript:;">親密關係</a></li>
+            <li name="兄弟姊妹間暴力"><a href="javascript:;">其他家虐</a></li>
+          </ul>
+        </div>
+        <div class="nav-title3-list-box nav-list-box area">
+          <ul class="nav-title3-list nav-list">
+            <li><a href="javascript:;">全部</a></li>
+            <li><a href="javascript:;">士林區</a></li>
+            <li><a href="javascript:;">文山區</a></li>
+            <li><a href="javascript:;">內湖區</a></li>
+            <li><a href="javascript:;">北投區</a></li>
+            <li><a href="javascript:;">中山區</a></li>
+            <li><a href="javascript:;">大安區</a></li>
+            <li><a href="javascript:;">萬華區</a></li>
+            <li><a href="javascript:;">信義區</a></li>
+            <li><a href="javascript:;">松山區</a></li>
+            <li><a href="javascript:;">大同區</a></li>
+            <li><a href="javascript:;">南港區</a></li>
+            <li><a href="javascript:;">中正區</a></li>
+          </ul>
+        </div>
+        <div class="nav-title4-list-box nav-list-box village">
+          <ul class="nav-title4-list nav-list">
+          </ul>
+        </div>
+      </div>
+      <div class="content">
+        
+        <div id="map"></div>
+        <div class="right">
+          <!-- <div class="distribution-Statistics axis"></div> -->
+          <div class="statistic-area">
+            <h3 class="title">台北市整體家暴案件類型分佈</h3>
+            <div class="distribution-Statistics axis"></div>
+          </div>
+          <div class="area-top10 top10">
+            <h3 class="title">台北市家暴風險分數<br>前十大區</h3>
+            <ul>
+              <li>士林區</li>
+              <li>文山區</li>
+              <li>內湖區</li>
+              <li>北投區</li>
+              <li>中山區</li>
+              <li>大安區</li>
+              <li>萬華區</li>
+              <li>信義區</li>
+              <li>松山區</li>
+              <li>大同區</li>
+            </ul>
+          </div>
+          <div class="village-top10 top10">
+            <h3 class="title">台北市家暴風險分數<br>前十大里</h3>
+            <ul>
+              <li>和德里</li>
+              <li>社新里</li>
+              <li>明義里</li>
+              <li>五分里</li>
+              <li>順興里</li>
+              <li>鄰江里</li>
+              <li>朱園里</li>
+              <li>溫泉里</li>
+              <li>成福里</li>
+              <li>永和里</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</body>
+</html>
