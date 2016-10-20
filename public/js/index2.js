@@ -145,11 +145,11 @@
 
       // get color depending on population density value
       function getColor(d) {
-        return d > 80 ? '#a50f15' :
-               d > 60  ? '#de2d26' :
-               d > 40  ? '#fb6a4a' :
-               d > 20  ? '#fcae91' :
-                          '#fee5d9';
+        return d > 80 ? '#5A0000' :
+               d > 60  ? '#9C0000' :
+               d > 40  ? '#DE1021' :
+               d > 20  ? '#FF4D52' :
+                          '#FF7D84';
       }
       // typeOfCases = "全部";
       function style(features, typeOfCases) {
