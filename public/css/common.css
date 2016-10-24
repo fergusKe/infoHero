@@ -84,11 +84,11 @@ body {
   z-index: 2000; }
 
 .nav-list-box {
-  display: none;
   position: absolute;
   width: 100%;
-  top: 0;
-  left: 0; }
+  top: -1000px;
+  left: 0;
+  max-height: 180px; }
 
 .nav-list {
   width: 600px;
@@ -114,22 +114,29 @@ body {
   background-color: #ef5350; }
   .nav-title1-list-box li:hover {
     background-color: #ed3c39; }
+  .nav-title1-list-box li.active {
+    background-color: #ed3c39; }
 
 .nav-title2-list-box {
   background-color: #00bcd4; }
   .nav-title2-list-box li:hover {
+    background-color: #00a5bb; }
+  .nav-title2-list-box li.active {
     background-color: #00a5bb; }
 
 .nav-title3-list-box {
   background-color: #8bc34a; }
   .nav-title3-list-box li:hover {
     background-color: #7eb73d; }
+  .nav-title3-list-box li.active {
+    background-color: #7eb73d; }
 
 .nav-title4-list-box {
-  max-height: 180px;
   overflow-y: auto;
   background-color: #ffb300; }
   .nav-title4-list-box li:hover {
+    background-color: #e6a100; }
+  .nav-title4-list-box li.active {
     background-color: #e6a100; }
 
 #map {

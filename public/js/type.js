@@ -154,6 +154,33 @@
           }
           
           // console.log('typeOfCases = ', typeOfCases);
+          var param = location.href.split("?")[1];
+          if (param) {
+            var type = param.split("=")[1];
+          }
+          // console.log('param = ', param);
+          // console.log('type = ', type);
+          if (type == 'all') {
+            $('.type-name').text('全部');
+            $('.type-num').text(8928);
+            features.thisValue = +features["各里總案件數"];
+          } else if (type == 'old') {
+            $('.type-name').text('老人保護');
+            $('.type-num').text(541);
+            features.thisValue = +features["老人保護"];
+          } else if (type == 'children') {
+            $('.type-name').text('兒少保護');
+            $('.type-num').text(681);
+            features.thisValue = +features["兒少保護"];
+          } else if (type == 'intimate') {
+            $('.type-name').text('親密關係');
+            $('.type-num').text(4662);
+            features.thisValue = +features["親密關係"];
+          } else if (type == 'other') {
+            $('.type-name').text('其他家虐');
+            $('.type-num').text(2729);
+            features.thisValue = +features["其他家虐"];
+          }
           
           return {
             weight: 2,
@@ -223,27 +250,25 @@
         // }).addTo(map);
 
         /*切換行政區*/
-        // $('.nav-title2-list li').click(function() {
-        //   caseType = $(this).attr("name");
-        //   console.log('caseType = ', caseType);
-        //   $('.leaflet-zoom-animated g path').remove();
-        //   geojson = L.geoJson(villageTopojson, {
-        //     style: function (feature) {
-        //       // console.log('feature = ', feature);
-        //         return {
-        //           weight: 2,
-        //           opacity: 1,
-        //           color: 'white',
-        //           dashArray: '3',
-        //           fillOpacity: 0.7,
-        //           fillColor: getColor(feature[caseType])
-        //         };
-        //     },
-        //     onEachFeature: onEachFeature
-        //   }).addTo(map);
-
-        //   // geojson.setStyle({fillColor: getColor(30)});
-        // });
+        $('.nav-title2-list li').click(function() {
+          caseType = $(this).attr("name");
+          console.log('caseType = ', caseType);
+          $('.leaflet-zoom-animated g path').remove();
+          geojson = L.geoJson(villageTopojson, {
+            style: function (feature) {
+              // console.log('feature = ', feature);
+                return {
+                  weight: 2,
+                  opacity: 1,
+                  color: 'white',
+                  dashArray: '3',
+                  fillOpacity: 0.7,
+                  fillColor: getColor(feature[caseType])
+                };
+            },
+            onEachFeature: onEachFeature
+          }).addTo(map);
+        });
 
         map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
 
@@ -272,7 +297,7 @@
         legend.addTo(map);
 
         setNav();
-        
+
       });
     });
 
@@ -283,21 +308,23 @@
     }
 
     // Statistics Chart
-    d3.csv("data/statistics.csv", stringToNum, function(data) {
-      // type2
-      var width = 300,
-        height = 200,
-        margin = {left: 110, top: 30, right: 30, bottom: 30},
-        svg_width = width + margin.left + margin.right,
-        svg_height = height + margin.top + margin.bottom;
+    d3.csv("data/gender.csv", stringToNum, function(data) {
+      // console.log(data)
+      var width = 130,
+          height = 140,
+          margin = {left: 50, top: 30, right: 30, bottom: 30},
+          svg_width = width + margin.left + margin.right,
+          svg_height = height + margin.top + margin.bottom;
+          // svg_width = 450,
+          // svg_height = 250
 
       var scale = d3.scale.linear()
         .domain([0, d3.max(data, function(d) {return d.value;})])
-        .range([0, width]);
+        .range([height, 0]);
 
-      var scale_y = d3.scale.ordinal()
+      var scale_x = d3.scale.ordinal()
         .domain(data.map(function(d) {return d.type;}))
-        .rangeBands([0, height], 0.15);
+        .rangeBands([0, width], 0.5);
 
       var svg = d3.select(".distribution-Statistics")
         .append("svg")
@@ -307,10 +334,8 @@
       var chart = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-      // var x_axis = d3.svg.axis().scale(scale_x);
-      //   y_axis = d3.svg.axis().scale(scale).orient("left").ticks(5);
-      var x_axis = d3.svg.axis().scale(scale).ticks(5);
-        y_axis = d3.svg.axis().scale(scale_y).orient("left");
+      var x_axis = d3.svg.axis().scale(scale_x);
+        y_axis = d3.svg.axis().scale(scale).orient("left").ticks(5);
 
       chart.append("g")
         .call(x_axis)
@@ -325,32 +350,91 @@
         .attr("class", "bar")
         .attr("transform", function(d, i) {
           // console.log('scale_x(d.type) = ', scale_x(d.type));
-          return "translate(0, " + scale_y(d.type) + ")";
+          return "translate(" + scale_x(d.type) + ", 0)";
         });
 
       bar.append("rect")
         .attr({
-          // "y": function(d) {return scale(d.value)},
-          "width": function(d) {return scale(d.value)},
-          "height": scale_y.rangeBand()
+          "y": function(d) {return scale(d.value)},
+          "width": scale_x.rangeBand(),
+          "height": function(d) {return height - scale(d.value)}
         })
-        .style("fill", "#00bcd4");
+        .style("fill", "#489de4");
 
       bar.append("text")
         .text(function(d) {return d.value})
         .attr({
-          "x": function(d) {return scale(d.value)},
-          "y": scale_y.rangeBand()/2,
-          "dx": -5,
-          "dy": 6,
-          "text-anchor": "end"
+          "y": function(d) {return scale(d.value)},
+          "x": scale_x.rangeBand()/2,
+          "dy": -5,
+          "text-anchor": "middle"
+        });
+    });
+    d3.csv("data/age.csv", stringToNum, function(data) {
+      var width = 130,
+        height = 140,
+        margin = {left: 50, top: 30, right: 30, bottom: 30},
+        svg_width = width + margin.left + margin.right,
+        svg_height = height + margin.top + margin.bottom;
+        // svg_width = 450,
+        // svg_height = 250
+
+      var scale = d3.scale.linear()
+        .domain([0, d3.max(data, function(d) {return d.value;})])
+        .range([height, 0]);
+
+      var scale_x = d3.scale.ordinal()
+        .domain(data.map(function(d) {return d.type;}))  // 影片有錯，是year，不是population
+        .rangeBands([0, width], 0.3);
+
+      var svg = d3.select(".distribution-Statistics2")
+        .append("svg")
+        .attr("width", svg_width)
+        .attr("height", svg_height);
+
+      var chart = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+      var x_axis = d3.svg.axis().scale(scale_x);
+        y_axis = d3.svg.axis().scale(scale).orient("left").ticks(5);
+
+      chart.append("g")
+        .call(x_axis)
+        .attr("transform", "translate(0, " + height + ")");
+      chart.append("g")
+        .call(y_axis);
+
+      var bar = chart.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d, i) {
+          // console.log('scale_x(d.type) = ', scale_x(d.type));
+          return "translate(" + scale_x(d.type) + ", 0)";
+        });
+
+      bar.append("rect")
+        .attr({
+          "y": function(d) {return scale(d.value)},
+          "width": scale_x.rangeBand(),
+          "height": function(d) {return height - scale(d.value)}
         })
+        .style("fill", "#489de4");
+
+      bar.append("text")
+        .text(function(d) {return d.value})
+        .attr({
+          "y": function(d) {return scale(d.value)},
+          "x": scale_x.rangeBand()/2,
+          "dy": -5,
+          "text-anchor": "middle"
+        });
     });
     function stringToNum(d) {
       d.value = +d.value;
       return d;
     }
-
 
     /*nav*/
     /*show nav-list*/
@@ -550,5 +634,36 @@
       });
       $('.nav-title3-list li').eq(0).click();
     }
+
+    /*setCaseType*/
+    // function setCaseType() {
+    //   var param = location.href.split("?")[1];
+    //   if (param) {
+    //     var type = param.split("=")[1];
+    //   }
+    //   // console.log('param = ', param);
+    //   // console.log('type = ', type);
+    //   if (type == 'all') {
+    //     $('.type-name').text('全部');
+    //     $('.type-num').text(8928);
+    //     features.thisValue = +features["各里總案件數"];
+    //   } else if (type == 'old') {
+    //     $('.type-name').text('老人保護');
+    //     $('.type-num').text(541);
+    //     features.thisValue = +features["老人保護"];
+    //   } else if (type == 'children') {
+    //     $('.type-name').text('兒少保護');
+    //     $('.type-num').text(681);
+    //     features.thisValue = +features["兒少保護"];
+    //   } else if (type == 'intimate') {
+    //     $('.type-name').text('親密關係');
+    //     $('.type-num').text(4662);
+    //     features.thisValue = +features["親密關係"];
+    //   } else if (type == 'other') {
+    //     $('.type-name').text('其他家虐');
+    //     $('.type-num').text(2729);
+    //     features.thisValue = +features["其他家虐"];
+    //   }
+    // }
   });
 })(jQuery)

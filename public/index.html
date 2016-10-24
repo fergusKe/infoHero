@@ -20,6 +20,7 @@
   <script src="js/radar-chart.js"></script>
   <!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
   <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/index.js"></script>
 </head>
 <body>
@@ -49,17 +50,17 @@
       <div class="nav-dropdown">
         <div class="nav-title1-list-box nav-list-box chartType">
           <ul class="nav-title1-list nav-list">
-            <li name="受害者地圖"><a href="index2.html">受害者地圖</a></li>
+            <li class="active" name="受害者地圖"><a href="javascript:;">受害者地圖</a></li>
             <li name="親密關係風險地圖"><a href="javascript:;">親密關係風險地圖</a></li>
           </ul>
         </div>
         <div class="nav-title2-list-box nav-list-box caseCategory">
           <ul class="nav-title2-list nav-list">
-            <li name="各里總案件數"><a href="javascript:;">全部</a></li>
-            <li name="老人保護"><a href="javascript:;">老人保護</a></li>
-            <li name="兒少保護"><a href="javascript:;">兒少保護</a></li>
-            <li name="親密關係"><a href="javascript:;">親密關係</a></li>
-            <li name="兄弟姊妹間暴力"><a href="javascript:;">其他家虐</a></li>
+            <li name="各里總案件數"><a href="type.html?type=all">全部</a></li>
+            <li name="老人保護"><a href="type.html?type=old">老人保護</a></li>
+            <li name="兒少保護"><a href="type.html?type=children">兒少保護</a></li>
+            <li name="親密關係"><a href="type.html?type=intimate">親密關係</a></li>
+            <li name="兄弟姊妹間暴力"><a href="type.html?type=other">其他家虐</a></li>
           </ul>
         </div>
         <div class="nav-title3-list-box nav-list-box area">
