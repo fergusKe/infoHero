@@ -71,7 +71,9 @@ body {
 
 .main {
   position: relative;
-  padding-bottom: 30px; }
+  overflow: hidden;
+  padding-bottom: 30px;
+  min-width: 1024px; }
 
 .content {
   padding-top: 20px;
