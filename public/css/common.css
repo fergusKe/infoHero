@@ -179,9 +179,6 @@ body {
   right: 20px;
   z-index: 1; }
 
-#details p.lead {
-  display: none; }
-
 .tooltip {
   position: absolute;
   width: 170px;

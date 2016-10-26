@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
   <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/type.css">
+  <link rel="stylesheet" href="css/risk.css">
   <title>家防案件預警及風險管理系統</title>
   <script src="//codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="js/TweenMax.min.js"></script>
@@ -21,7 +21,7 @@
   <!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
   <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
   <script src="js/common.js"></script>
-  <script src="js/type.js"></script>
+  <script src="js/risk.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -88,96 +88,14 @@
         
         <div id="map"></div>
         <div class="right">
-          <div class="notes">
-            台北市
-            <span class="type-name"></span>
-            案件
-            <span class="type-num"></span>
-            件
-          </div>
-          <!-- <div class="distribution-Statistics axis"></div> -->
-          <div class="statistic-area">
-            <div class="statistic">
-              <h3 class="title">被害人男女比例</h3>
-              <div class="distribution-Statistics axis"></div>
-            </div>
-            <div class="statistic">
-              <h3 class="title">被害人年齡分佈</h3>
-              <div class="distribution-Statistics2 axis"></div>
-            </div>
-          </div>
           <div class="area-top10 top10">
-            <h3 class="title">台北市<span class="type-name"></span>案件數<br>發生區域排名</h3>
+            <h3 class="title">台北市親密關係家暴 風險分數<br>前十大區</h3>
             <ul>
-              <!-- <li>士林區</li>
-              <li>文山區</li>
-              <li>內湖區</li>
-              <li>北投區</li>
-              <li>中山區</li>
-              <li>大安區</li>
-              <li>萬華區</li>
-              <li>信義區</li>
-              <li>松山區</li>
-              <li>大同區</li> -->
             </ul>
           </div>
           <div class="village-top10 top10">
-            <h3 class="title">台北市<span class="type-name"></span>案件數<br>發生前三十里</h3>
+            <h3 class="title">台北市親密關係家暴 風險分數<br>前十大里</h3>
             <ul>
-              <!-- <li>和德里</li>
-              <li>社新里</li>
-              <li>明義里</li>
-              <li>五分里</li>
-              <li>順興里</li>
-              <li>鄰江里</li>
-              <li>朱園里</li>
-              <li>溫泉里</li>
-              <li>成福里</li>
-              <li>永和里</li>
-              <li>和德里</li>
-              <li>社新里</li>
-              <li>明義里</li>
-              <li>五分里</li>
-              <li>順興里</li>
-              <li>鄰江里</li>
-              <li>朱園里</li>
-              <li>溫泉里</li>
-              <li>成福里</li>
-              <li>永和里</li>
-              <li>和德里</li>
-              <li>社新里</li>
-              <li>明義里</li>
-              <li>五分里</li>
-              <li>順興里</li>
-              <li>鄰江里</li>
-              <li>朱園里</li>
-              <li>溫泉里</li>
-              <li>成福里</li>
-              <li>永和里</li> -->
-            </ul>
-          </div>
-          <div class="top5 top10">
-            <h3 class="title">
-              <span class="type-name"></span>類型
-              <select class="chartType">
-                <option value="士林區">士林區</option>
-                <option value="文山區">文山區</option>
-                <option value="內湖區">內湖區</option>
-                <option value="北投區">北投區</option>
-                <option value="中山區">中山區</option>
-                <option value="大安區">大安區</option>
-                <option value="信義區">信義區</option>
-                <option value="萬華區">萬華區</option>
-                <option value="松山區">松山區</option>
-                <option value="大同區">大同區</option>
-                <option value="南港區">南港區</option>
-                <option value="中正區">中正區</option>
-              </select>
-              <br>
-              數量前五大里
-            </h3>
-            <ul>
-              
             </ul>
           </div>
         </div>

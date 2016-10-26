@@ -1,3 +1,6 @@
+.content {
+  width: 1070px; }
+
 .notes {
   text-align: center;
   font-size: 18px;
@@ -21,7 +24,7 @@
 .top10 {
   display: inline-block;
   text-align: center;
-  width: 220px;
+  width: 270px;
   margin-top: 20px;
   vertical-align: top; }
   .top10 h3 {
