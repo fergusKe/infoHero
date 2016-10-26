@@ -11,6 +11,7 @@ body {
 .header {
   height: 50px;
   background-color: #424242;
+  min-width: 1024px;
   z-index: 10; }
   .header .h-title {
     position: absolute;
@@ -70,7 +71,6 @@ body {
 
 .main {
   position: relative;
-  overflow: hidden;
   padding-bottom: 30px; }
 
 .content {

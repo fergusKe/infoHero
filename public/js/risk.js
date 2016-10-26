@@ -30,7 +30,7 @@
           }
         }
         // console.log('TaipeiVillageNameArr = ', TaipeiVillageNameArr.length);
-        console.log('result = ', result);
+        // console.log('result = ', result);
 
         var villageTopojson = topojson.feature(topodata, topodata.objects["Village_NLSC_121_1050715"]);
         var features = villageTopojson.features;
@@ -58,7 +58,7 @@
           }
         });
         // console.log('features = ', features);
-        console.log('TaipeiVillageArr = ', TaipeiVillageArr);
+        // console.log('TaipeiVillageArr = ', TaipeiVillageArr);
         features = TaipeiVillageArr;
         villageTopojson.features = TaipeiVillageArr;
         // console.log('features = ', features);
