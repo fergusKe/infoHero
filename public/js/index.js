@@ -408,6 +408,11 @@
         navListBox.css( hideObj ).eq(navNowIndex).css({
           display: 'block'
         });
+        if (navNowIndex == 3) {
+          $('.nav-list-box').eq(navNowIndex).css({
+            'overflow-y': 'hidden'
+          });
+        }
         var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
         // console.log('nowNavListBoxHeight = ', nowNavListBoxHeight);
 
@@ -438,6 +443,11 @@
       navListBox.hover(function() {
         $(this).css( showObj );
         navTitle.removeClass('active').eq(navNowIndex).addClass('active');
+        if (navNowIndex == 3) {
+          $('.nav-list-box').eq(navNowIndex).css({
+            'overflow-y': 'auto'
+          });
+        }
       }, function() {
         navListBox.eq(navObj.index).css( hideObj );
         navObj.dropdown[navObj.index].show = 0;
@@ -495,13 +505,39 @@
           // console.log('_navListShow_TL = ', _navListShow_TL);
           if (!_navListShow_TL[navNowIndex]) {
             _navListShow_TL[navNowIndex] = new TimelineLite();
-            _navListShow_TL[navNowIndex].add(
-                TweenMax.staggerFrom(navLi, .3, {
-                delay: .3,
-                top: 30,
-                opacity: 0
-              }, .05)
-            )
+            if (navNowIndex == 3) {
+              navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+              
+              _navListShow_TL[navNowIndex].add(function() {
+                $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
+                navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+              })
+              _navListShow_TL[navNowIndex].add(
+                  TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+                  delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, .05)
+              )
+              _navListShow_TL[navNowIndex].add(
+                TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
+                  // delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, {
+                  top: 0,
+                  opacity: 1
+                }), "-=0.3"
+              )
+            } else {
+              _navListShow_TL[navNowIndex].add(
+                  TweenMax.staggerFrom(navLi, .3, {
+                  delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, .05)
+              )
+            }
           }
           _navListShow_TL[navNowIndex].restart();
           

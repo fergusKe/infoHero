@@ -2,74 +2,63 @@
   $(function() {
     var TaipeiAreaArr = ["士林區", "文山區", "內湖區", "北投區", "中山區", "大安區", "信義區", "萬華區", "松山區", "大同區", "南港區", "中正區"];
     var TaipeiAreaInfo = {};
+    // var TaipeiVillageArr = [];
     TaipeiAreaInfo['全部'] = [];
     var locationParam = location.href.split("?")[1];
-      if (locationParam) {
-        var locationType = locationParam.split("=")[1];
-      }
+    if (locationParam) {
+      var locationType = locationParam.split("=")[1];
+    }
     
     d3.json("data/county.json", function(topodata) {
-      d3.csv("data/mapInfo.csv", function(mapInfo) {
+      d3.csv("data/district_rank_village.csv", function(mapInfo) {
         // console.log('mapInfo = ', mapInfo);
         var result = {};
-        var caseType = "各里總案件數";
+        var caseType = "avg_predict";
         var TaipeiVillageArr = [];
+        var TaipeiVillageNameArr = [];
         var village;
         var temp = [];
         for (var i = 0 ; i < mapInfo.length - 1; i++) {
-          village = mapInfo[i]["里"];
+          village = mapInfo[i]["town"];
           if(village){
             // console.log('village = ', village);
-            village = village.replace("台","臺");
+            // village = village.replace("台","臺");
+            TaipeiVillageNameArr[i] = village;
             result[village] = result[village] || {};
-            result[village]["兄弟姊妹間暴力"] = +mapInfo[i]["兄弟姊妹間暴力"].replace("%", "") || 0;
-            result[village]["老人保護"] = +mapInfo[i]["老人保護"].replace("%", "") || 0;
-            result[village]["兒少保護"] = +mapInfo[i]["兒少保護"].replace("%", "") || 0;
-            result[village]["親密關係"] = +mapInfo[i]["親密關係"].replace("%", "") || 0;
-            result[village]["其他家虐"] = +mapInfo[i]["其他家虐"].replace("%", "") || 0;
-            result[village]["低收"] = +mapInfo[i]["低收"].replace("%", "") || 0;
-            result[village]["障礙"] = +mapInfo[i]["障礙"].replace("%", "") || 0;
-            result[village]["各里總案件數"] = +mapInfo[i]["各里總案件數"].replace("%", "") || 0;
+            result[village]["avg_predict"] = +(+mapInfo[i]["avg_predict"]).toFixed(2);
+            result[village]["fivequintiles"] = +(+mapInfo[i]["fivequintiles"]).toFixed(2);
           }
         }
+        // console.log('TaipeiVillageNameArr = ', TaipeiVillageNameArr);
+        console.log('result = ', result);
 
         var villageTopojson = topojson.feature(topodata, topodata.objects["Village_NLSC_121_1050715"]);
         var features = villageTopojson.features;
         
         features = features.map(function(f) {
           if ( f.properties.C_Name === "臺北市" && checkAvailability(TaipeiAreaArr, f.properties.T_Name) ) {
-            if(result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]) {
-              f["兄弟姊妹間暴力"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["兄弟姊妹間暴力"] || 0;
-              f["老人保護"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["老人保護"] || 0;
-              f["兒少保護"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["兒少保護"] || 0;
-              f["親密關係"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["親密關係"] || 0;
-              f["其他家虐"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["其他家虐"] || 0;
-              f["低收"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["低收"] || 0;
-              f["障礙"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["障礙"] || 0;
-              f["各里總案件數"] = +result[f.properties.C_Name + f.properties.T_Name + f.properties.V_Name]["各里總案件數"] || 0;
+            // console.log('f.properties.Substitute = ', f.properties.Substitute);
+            if(result[f.properties.Substitute]) {
+              f["avg_predict"] = +result[f.properties.Substitute]["avg_predict"] || 0;
+              f["fivequintiles"] = +result[f.properties.Substitute]["fivequintiles"] || 0;
             } else {
-              f["兄弟姊妹間暴力"] = 0;
-              f["老人保護"] = 0;
-              f["兒少保護"] = 0;
-              f["親密關係"] = 0; 
-              f["其他家虐"] = 0;
-              f["低收"] = 0;
-              f["障礙"] = 0;
-              f["各里總案件數"] = 0;      
+              f["avg_predict"] = 0; 
+              f["fivequintiles"] = 0; 
             }
+            // console.log('f["avg_predict"] = ', f["avg_predict"]);
 
             TaipeiVillageArr.push(f);
 
-            if (!TaipeiAreaInfo[f.properties.T_Name]){
-              TaipeiAreaInfo[f.properties.T_Name]=[];
-            }
-            TaipeiAreaInfo[f.properties.T_Name].push(f);
+            // if (!TaipeiAreaInfo[f.properties.T_Name]){
+            //   TaipeiAreaInfo[f.properties.T_Name]=[];
+            // }
+            // TaipeiAreaInfo[f.properties.T_Name].push(f);
 
-            TaipeiAreaInfo['全部'].push(f);
+            // TaipeiAreaInfo['全部'].push(f);
           }
         });
         // console.log('features = ', features);
-        // console.log('TaipeiAreaInfo = ', TaipeiAreaInfo);
+        console.log('TaipeiVillageArr = ', TaipeiVillageArr);
         features = TaipeiVillageArr;
         villageTopojson.features = TaipeiVillageArr;
         // console.log('features = ', features);
@@ -103,7 +92,7 @@
 
         info.update = function (props) {
          this._div.innerHTML = '<h4>台北市熱區地圖</h4>' +  (props ?
-           '<b>台北市 ' + props.properties.V_Name + '</b><br />' + '案件數：' + props[caseType]
+           '<b>台北市 ' + props.properties.V_Name + '</b><br />' + '風險分數：' + props[caseType]
            : '請將滑鼠移至村里位置');
         };
 
@@ -111,51 +100,24 @@
 
         // get color depending on population density value
         function getColor(d) {
-          return d > 26 ? '#5A0000' :
-                 d > 21  ? '#9C0000' :
-                 d > 16  ? '#DE1021' :
-                 d > 11  ? '#FF4D52' :
-                            '#FF7D84';
+          // console.log('d = ', d);
+          return d >= 5 ? '#5A0000' :
+                 d >= 4 ? '#9C0000' :
+                 d >= 3 ? '#DE1021' :
+                 d >= 2 ? '#FF4D52' :
+                           '#FF7D84';
         }
         // typeOfCases = "全部";
         function style(features, typeOfCases) {
           // console.log('style = ', features);
           // console.log('typeOfCases = ', typeOfCases);
           if (typeOfCases == undefined) {
-            features.thisValue = +features["各里總案件數"];
+            features.thisValue = +features["fivequintiles"];
           } else {
             features.thisValue = +features[typeOfCases];
           }
           
           // console.log('typeOfCases = ', typeOfCases);
-          
-
-          if (locationType == 'all') {
-            $('.type-name').text('全部');
-            $('.type-num').text(8928);
-            features.thisValue = +features["各里總案件數"];
-            $('.nav-title2-list-box li').eq(0).addClass('active');
-          } else if (locationType == 'old') {
-            $('.type-name').text('老人保護');
-            $('.type-num').text(541);
-            features.thisValue = +features["老人保護"];
-            $('.nav-title2-list-box li').eq(1).addClass('active');
-          } else if (locationType == 'children') {
-            $('.type-name').text('兒少保護');
-            $('.type-num').text(681);
-            features.thisValue = +features["兒少保護"];
-            $('.nav-title2-list-box li').eq(2).addClass('active');
-          } else if (locationType == 'intimate') {
-            $('.type-name').text('親密關係');
-            $('.type-num').text(4662);
-            features.thisValue = +features["親密關係"];
-            $('.nav-title2-list-box li').eq(3).addClass('active');
-          } else if (locationType == 'other') {
-            $('.type-name').text('其他家虐');
-            $('.type-num').text(2729);
-            features.thisValue = +features["其他家虐"];
-            $('.nav-title2-list-box li').eq(4).addClass('active');
-          }
           
           return {
             weight: 2,
@@ -238,13 +200,14 @@
 
          var div = L.DomUtil.create('div', 'info legend'),
            grades = [0, 20, 40, 60, 80, 100],
-           grades_data = [1, 11, 16, 21, 26, 65],
+           grades_data = [0, 1, 2, 3, 4, 5],
            labels = [],
            from, to;
 
          for (var i = 0; i < grades.length - 1; i++) {
            from = grades[i];
            from_data = grades_data[i]
+           console.log('from_data = ', from_data);
            to = grades[i + 1];
 
            labels.push(
@@ -564,13 +527,39 @@
           // console.log('_navListShow_TL = ', _navListShow_TL);
           if (!_navListShow_TL[navNowIndex]) {
             _navListShow_TL[navNowIndex] = new TimelineLite();
-            _navListShow_TL[navNowIndex].add(
-                TweenMax.staggerFrom(navLi, .3, {
-                delay: .3,
-                top: 30,
-                opacity: 0
-              }, .05)
-            )
+            if (navNowIndex == 3) {
+              navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+              
+              _navListShow_TL[navNowIndex].add(function() {
+                $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
+                navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+              })
+              _navListShow_TL[navNowIndex].add(
+                  TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+                  delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, .05)
+              )
+              _navListShow_TL[navNowIndex].add(
+                TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
+                  // delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, {
+                  top: 0,
+                  opacity: 1
+                }), "-=0.3"
+              )
+            } else {
+              _navListShow_TL[navNowIndex].add(
+                  TweenMax.staggerFrom(navLi, .3, {
+                  delay: .3,
+                  top: 30,
+                  opacity: 0
+                }, .05)
+              )
+            }
           }
           _navListShow_TL[navNowIndex].restart();
           
@@ -682,12 +671,12 @@
       for (var i = 0; i < data.length; i++) {
         oldArr[i] = data[i]['avg_predict'];
       }
-      console.log('oldArr = ', oldArr);
+      // console.log('oldArr = ', oldArr);
       bubbleSort(data, 'avg_predict');
       for (var i = 0; i < data.length; i++) {
         newArr[i] = data[i]['avg_predict'];
       }
-      console.log('newArr = ', newArr);
+      // console.log('newArr = ', newArr);
       var html = '';
       for (var j = 0; j < 10; j++) {
         // console.log('allArr[i] = ', allArr[i]['各里總案件數']);
