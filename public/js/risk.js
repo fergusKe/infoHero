@@ -29,7 +29,7 @@
             result[village]["fivequintiles"] = +(+mapInfo[i]["fivequintiles"]).toFixed(2);
           }
         }
-        // console.log('TaipeiVillageNameArr = ', TaipeiVillageNameArr);
+        // console.log('TaipeiVillageNameArr = ', TaipeiVillageNameArr.length);
         console.log('result = ', result);
 
         var villageTopojson = topojson.feature(topodata, topodata.objects["Village_NLSC_121_1050715"]);
@@ -39,11 +39,11 @@
           if ( f.properties.C_Name === "臺北市" && checkAvailability(TaipeiAreaArr, f.properties.T_Name) ) {
             // console.log('f.properties.Substitute = ', f.properties.Substitute);
             if(result[f.properties.Substitute]) {
-              f["avg_predict"] = +result[f.properties.Substitute]["avg_predict"] || 0;
-              f["fivequintiles"] = +result[f.properties.Substitute]["fivequintiles"] || 0;
+              f["avg_predict"] = +result[f.properties.Substitute]["avg_predict"] || 1;
+              f["fivequintiles"] = +result[f.properties.Substitute]["fivequintiles"] || 1;
             } else {
-              f["avg_predict"] = 0; 
-              f["fivequintiles"] = 0; 
+              f["avg_predict"] = 1; 
+              f["fivequintiles"] = 1; 
             }
             // console.log('f["avg_predict"] = ', f["avg_predict"]);
 
@@ -206,8 +206,7 @@
 
          for (var i = 0; i < grades.length - 1; i++) {
            from = grades[i];
-           from_data = grades_data[i]
-           console.log('from_data = ', from_data);
+           from_data = grades_data[i];
            to = grades[i + 1];
 
            labels.push(

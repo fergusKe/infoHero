@@ -131,31 +131,37 @@
           
 
           if (locationType == 'all') {
+            caseType = "各里總案件數";
             $('.type-name').text('全部');
             $('.type-num').text(8928);
             features.thisValue = +features["各里總案件數"];
             $('.nav-title2-list-box li').eq(0).addClass('active');
           } else if (locationType == 'old') {
+            caseType = "老人保護";
             $('.type-name').text('老人保護');
             $('.type-num').text(541);
             features.thisValue = +features["老人保護"];
             $('.nav-title2-list-box li').eq(1).addClass('active');
           } else if (locationType == 'children') {
+            caseType = "兒少保護";
             $('.type-name').text('兒少保護');
             $('.type-num').text(681);
             features.thisValue = +features["兒少保護"];
             $('.nav-title2-list-box li').eq(2).addClass('active');
           } else if (locationType == 'intimate') {
+            caseType = "親密關係";
             $('.type-name').text('親密關係');
             $('.type-num').text(4662);
             features.thisValue = +features["親密關係"];
             $('.nav-title2-list-box li').eq(3).addClass('active');
           } else if (locationType == 'other') {
+            caseType = "其他家虐";
             $('.type-name').text('其他家虐');
             $('.type-num').text(2729);
             features.thisValue = +features["其他家虐"];
             $('.nav-title2-list-box li').eq(4).addClass('active');
           }
+          // console.log('features.thisValue = ', features.thisValue);
           
           return {
             weight: 2,
@@ -244,7 +250,7 @@
 
          for (var i = 0; i < grades.length - 1; i++) {
            from = grades[i];
-           from_data = grades_data[i]
+           from_data = grades_data[i];
            to = grades[i + 1];
 
            labels.push(
