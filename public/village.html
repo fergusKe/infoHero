@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./css/lib/leaflet.css" />
   <link rel="stylesheet" href="./css/lib/fakeLoader.css">
   <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/type.css">
+  <link rel="stylesheet" href="./css/village.css">
   <title>家防案件預警及風險管理系統</title>
   <script src="./js/lib/jquery-1.9.1.min.js"></script>
   <script src="./js/lib/store.js"></script>
@@ -18,7 +18,7 @@
   <script src="./js/lib/topojson.v1.min.js"></script>
 
   <script src="js/common.js"></script>
-  <script src="js/type.js"></script>
+  <script src="js/village.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -86,23 +86,85 @@
         <div id="map"></div>
         <div class="right">
           <div class="notes">
-            台北市
-            <span class="type-name"></span>
-            案件
-            <span class="type-num"></span>
-            件
+            <span class="area-name"></span>
+            <span class="village-name"></span>
+            總案件數
+            <span class="village-num"></span>
+          </div>
+          <div class="compare">
+            <div class="chart-box">
+              <div class="chart-type axis"></div>
+              <p>該里中低收入戶被害人於台北市中低收入戶被害人排名</p>
+              <p style="margin-top: 10px;">該里身心障礙被害人於台北市身心障害被害人排名</p>
+            </div>
+            <div class="rank-box">
+              <div class="rank-old rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+              <div class="rank-children rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+              <div class="rank-intimate rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+              <div class="rank-other rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+              <div class="rank-LowIncome rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+              <div class="rank-disabled rank">
+                <div class="mark-icon">
+                  <img src="./css/lib/images/marker-icon.png" alt="">
+                </div>
+                <div class="rank-bar">
+                  <span class="low">0</span>
+                  <span class="high">100</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="chart">
-            <div class="statistic">
+            <div class="statistic gender">
               <h3 class="title">被害人男女比例</h3>
               <div class="chart-gender axis"></div>
             </div>
-            <div class="statistic">
+            <div class="statistic age">
               <h3 class="title">被害人年齡分佈</h3>
               <div class="chart-age axis"></div>
             </div>
           </div>
-          <div class="area-top10 list">
+          <!-- <div class="area-top10 list">
             <h3 class="title">台北市<span class="type-name"></span>案件數<br>發生區域排名</h3>
             <ul></ul>
           </div>
@@ -131,7 +193,7 @@
               數量前五大里
             </h3>
             <ul></ul>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
