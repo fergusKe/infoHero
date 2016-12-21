@@ -22,26 +22,18 @@ body {
     .header .h-title a {
       color: #FFF; }
 
-.nav .nav-title1 a:hover {
-  background-color: #ef5350; }
 .nav .nav-title1 ul {
   background-color: #ef5350; }
 .nav .nav-title1.active a {
   background-color: #ef5350; }
-.nav .nav-title2 a:hover {
-  background-color: #00bcd4; }
 .nav .nav-title2 ul {
   background-color: #00bcd4; }
 .nav .nav-title2.active a {
   background-color: #00bcd4; }
-.nav .nav-title3 a:hover {
-  background-color: #8bc34a; }
 .nav .nav-title3 ul {
   background-color: #8bc34a; }
 .nav .nav-title3.active a {
   background-color: #8bc34a; }
-.nav .nav-title4 a:hover {
-  background-color: #ffb300; }
 .nav .nav-title4 ul {
   background-color: #ffb300; }
 .nav .nav-title4.active a {
@@ -51,7 +43,7 @@ body {
   font-size: 0; }
   .nav .navCont > li {
     display: inline-block;
-    font-size: 16px;
+    font-size: 18px;
     height: 50px; }
     .nav .navCont > li > a {
       line-height: 50px; }
@@ -103,7 +95,7 @@ body {
     width: 150px;
     height: 40px;
     line-height: 40px;
-    font-size: 15px;
+    font-size: 18px;
     text-align: center;
     opacity: 1;
     -moz-box-sizing: border-box;

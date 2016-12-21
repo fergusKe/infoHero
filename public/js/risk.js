@@ -6,7 +6,7 @@
         zIndex: '1001',
         spinner:"spinner3"
     });
-    var TaipeiAreaArr = ["士林區", "文山區", "內湖區", "北投區", "中山區", "大安區", "信義區", "萬華區", "松山區", "大同區", "南港區", "中正區"];
+    var TaipeiAreaNameArr = ["士林區", "文山區", "內湖區", "北投區", "中山區", "大安區", "信義區", "萬華區", "松山區", "大同區", "南港區", "中正區"];
     var TaipeiAreaObj = {};
     TaipeiAreaObj['全部'] = [];
     var locationParam = location.href.split("?")[1];
@@ -38,7 +38,7 @@
         var features = villageTopojson.features;
 
         features = features.map(function(f) {
-          if ( f.properties.C_Name === "臺北市" && checkAvailability(TaipeiAreaArr, f.properties.T_Name) ) {
+          if ( f.properties.C_Name === "臺北市" && checkAvailability(TaipeiAreaNameArr, f.properties.T_Name) ) {
             if(result[f.properties.Substitute]) {
               f["avg_predict"] = +result[f.properties.Substitute]["avg_predict"] || 1;
               f["fivequintiles"] = +result[f.properties.Substitute]["fivequintiles"] || 1;
@@ -140,7 +140,11 @@
         }
 
         function zoomToFeature(e) {
-         map.fitBounds(e.target.getBounds());
+          var layer = e.target;
+          var villageName = layer.feature.properties.Substitute;
+   			 //  map.fitBounds(e.target.getBounds());
+          store.set('villageName', villageName);
+          top.location.href = 'village.html';
         }
 
         function onEachFeature(feature, layer) {
@@ -186,6 +190,9 @@
 
         setNav();
         rankList(TaipeiAreaObj);
+        district_rank_area();
+        district_rank_village(mapInfo);
+
         /*關閉loading效果*/
         $(".fakeloader").fadeOut(500, function() {
 
@@ -513,45 +520,49 @@
     };
 
     function rankList(pTaipeiAreaObj) {
-      // TaipeiAreaArr
+      // TaipeiAreaNameArr
       var areaArr = [];
     }
 
-    d3.csv("data/district_rank_area.csv", function(data) {
-      var oldArr = [];
-      var newArr = [];
-      for (var i = 0; i < data.length; i++) {
-        oldArr[i] = data[i]['avg_predict'];
-      }
+    function district_rank_area() {
+      d3.csv("data/district_rank_area.csv", function(data) {
+
+        bubbleSort(data, 'avg_predict');
+
+        var html = '';
+        for (var j = 0; j < 10; j++) {
+          html += "<li>" + data[j]['district'] + "</li>"
+        }
+        $('.area-top10 ul').append(html);
+      });
+    }
+
+    function district_rank_village(mapInfo) {
+      var data = mapInfo;
 
       bubbleSort(data, 'avg_predict');
-      for (var i = 0; i < data.length; i++) {
-        newArr[i] = data[i]['avg_predict'];
-      }
 
-      var html = '';
+
+
+      var html = '',
+          area = '';
       for (var j = 0; j < 10; j++) {
-        html += "<li>" + data[j]['district'] + "</li>"
-      }
-      $('.area-top10 ul').append(html);
-    });
-
-    d3.csv("data/district_rank_village.csv", function(data) {
-      var oldArr = [];
-      var newArr = [];
-      for (var i = 0; i < data.length; i++) {
-        oldArr[i] = data[i]['avg_predict'];
-      }
-
-      bubbleSort(data, 'avg_predict');
-      for (var i = 0; i < data.length; i++) {
-        newArr[i] = data[i]['avg_predict'];
-      }
-      var html = '';
-      for (var j = 0; j < 10; j++) {
-        html += "<li>" + data[j]['town'] + "</li>"
+        area = getArea(data[j]['town']);
+        html += "<li>" + area + data[j]['town'] + "</li>"
       }
       $('.village-top10 ul').append(html);
-    });
+
+      function getArea(town) {
+        var area = '';
+        for (var i = 0; i < TaipeiAreaNameArr.length; i++) {
+          for (var j = 0; j < TaipeiAreaObj[TaipeiAreaNameArr[i]].length; j++) {
+            if (TaipeiAreaObj[TaipeiAreaNameArr[i]][j]['properties']['Substitute'] == town) {
+              area = TaipeiAreaObj[TaipeiAreaNameArr[i]][j]['properties']['T_Name'];
+            }
+          }
+        }
+        return area;
+      }
+    }
   });
 })(jQuery)

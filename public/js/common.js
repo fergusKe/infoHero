@@ -5,11 +5,14 @@
   var TaipeiVillageArr = [];
   var villageTopojson, features;
   var caseType = "各里總案件數";  // 要在地圖上顯示的案件類型
+
   /*取得網址上的參數*/
   var locationParam = location.href.split("?")[1];
   if (locationParam) {
     var locationType = locationParam.split("=")[1];
   }
+
+  /*氣泡排序法*/
   var swap = function(data, i, j){
     var tmp = data[i];
     data[i] = data[j];
@@ -58,9 +61,9 @@
           $('.type-num').text(4662);
           $('.nav-title2-list-box li').eq(3).addClass('active');
         } else if (locationType == 'other') {
-          caseType = "其他家虐";
-          $('.type-name').text(caseType);
-          $('.type-num').text(2729);
+          caseType = "兄弟姊妹間暴力";
+          $('.type-name').text('其他家虐');
+          $('.type-num').text(315);
           $('.nav-title2-list-box li').eq(4).addClass('active');
         }
       }
@@ -336,7 +339,7 @@
         });
         $('.nav-title3-list li').eq(0).click();
 
-        $('.nav-title4-list li').click(function(e) {
+        $('.nav-title4-list').on('click', 'li', function(e) {
           var villageName;
           villageName = $(this).text();
           store.set('villageName', villageName);
@@ -374,11 +377,38 @@
 
   			// get color depending on population density value
   			function getColor(d) {
-  				return d > 26 ? '#5A0000' :
-  							 d > 21  ? '#9C0000' :
-  							 d > 16  ? '#DE1021' :
-  							 d > 11  ? '#FF4D52' :
-  													'#FF7D84';
+          // console.log('dd = ', locationType);
+          var color;
+          switch(locationType) {
+            case 'old':
+              color = d >= 3 ? '#5A0000' :
+                        d >= 2 ? '#9C0000' :
+                                 '#FF7D84';
+              break;
+            case 'children':
+              color = d >= 3 ? '#5A0000' :
+                        d >= 2 ? '#9C0000' :
+                                 '#FF7D84';
+              break;
+            case 'intimate':
+              color = d >= 14 ? '#5A0000' :
+                        d >= 11 ? '#9C0000' :
+                        d >= 8 ? '#DE1021' :
+                        d >= 6 ? '#FF4D52' :
+                                 '#FF7D84';
+              break;
+            case 'other':
+              color = d >= 2 ? '#5A0000' :
+                              '#FF7D84';
+              break;
+            default:
+              color = d >= 26 ? '#5A0000' :
+                        d >= 21 ? '#9C0000' :
+                        d >= 16 ? '#DE1021' :
+                        d >= 11 ? '#FF4D52' :
+                                 '#FF7D84';
+          }
+  				return color;
   			}
 
   			function style(features) {
@@ -416,7 +446,11 @@
   			}
 
   			function zoomToFeature(e) {
-  			 map.fitBounds(e.target.getBounds());
+         var layer = e.target;
+         var villageName = layer.feature.properties.Substitute;
+  			 //  map.fitBounds(e.target.getBounds());
+         store.set('villageName', villageName);
+         top.location.href = 'village.html';
   			}
 
   			function onEachFeature(feature, layer) {
@@ -438,19 +472,40 @@
 
   			legend.onAdd = function (map) {
 
-  			 var div = L.DomUtil.create('div', 'info legend'),
-  				 grades = [0, 20, 40, 60, 80, 100],
-  				 grades_data = [1, 11, 16, 21, 26, 65],
-  				 labels = [],
-  				 from, to;
+         var div = L.DomUtil.create('div', 'info legend'),
+        	 grades = [],
+        	 grades_data = [],
+        	 labels = [],
+        	 from, to;
+
+         switch(locationType) {
+           case 'old':
+             grades = [0, 60, 80, 100];
+             grades_data = [1, 2, 3, 7];
+             break;
+           case 'children':
+             grades = [0, 60, 80, 100];
+             grades_data = [1, 2, 3, 8];
+             break;
+           case 'intimate':
+             grades = [0, 20, 40, 60, 80, 100];
+             grades_data = [1, 6, 8, 11, 14, 39];
+             break;
+           case 'other':
+             grades = [0, 80, 100];
+             grades_data = [1, 2, 4];
+             break;
+           default:
+             grades = [0, 20, 40, 60, 80, 100];
+             grades_data = [1, 11, 16, 21, 26, 65];
+         }
 
   			 for (var i = 0; i < grades.length - 1; i++) {
   				 from = grades[i];
-  				 from_data = grades_data[i]
+  				 from_data = grades_data[i];
   				 to = grades[i + 1];
-
   				 labels.push(
-  					 '<i style="background:' + getColor(from_data + 1) + '"></i> ' +
+  					 '<i style="background:' + getColor(from_data) + '"></i> ' +
   					 from + (to ? '&ndash;' + to : '+'));
   			 }
 

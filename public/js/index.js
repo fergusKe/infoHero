@@ -6,7 +6,7 @@
   });
 
   /*案件類型直條圖*/
-  function setChart(pData) {
+  function setChart(pData, pTaipeiAreaObj) {
     // d3.csv("data/case_type.csv", stringToNum, function(pData) {
       for (var i = 0; i < pData.length; i++) {
         if (pData[i]['案件類型'] === '老人保護') {
@@ -108,6 +108,40 @@
           });
       }
     // });
+    setAreaTop10(caseType);
+    setVillageTop10(caseType);
 
+    function setAreaTop10(caseType) {
+      var totalArr = [];
+      var total = 0;
+
+      for (var i = 0; i < TaipeiAreaNameArr.length; i++) {
+        total = 0;
+        for (var j = 0; j < pTaipeiAreaObj[TaipeiAreaNameArr[i]].length; j++) {
+          total += pTaipeiAreaObj[TaipeiAreaNameArr[i]][j][caseType];
+        }
+        totalArr[i] = {};
+        totalArr[i]['name'] = TaipeiAreaNameArr[i];
+        totalArr[i]['value'] = total;
+      }
+
+      bubbleSort(totalArr, 'value');
+
+      var html = '';
+      for (var i = 0; i < 10; i++) {
+        html += "<li>" + totalArr[i]["name"] + "</li>"
+      }
+      $('.area-top10 ul').append(html);
+    }
+    function setVillageTop10(caseType) {
+      var allArr = pTaipeiAreaObj['全部'];
+      bubbleSort(allArr, caseType);
+
+      var html = '';
+      for (var i = 0; i < 10; i++) {
+        html += "<li>" + allArr[i]['properties']['T_Name'] + allArr[i]['properties']['Substitute'] + "</li>"
+      }
+      $('.village-top10 ul').append(html);
+    }
   }
 // })(jQuery)

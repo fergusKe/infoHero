@@ -18,8 +18,9 @@
 .village-top10 ul {
   height: 280px;
   overflow-x: auto;
-  width: 82px;
-  padding-left: 47px; }
+  width: 134px;
+  padding-left: 47px;
+  padding-right: 8px; }
 
 .top5 {
   display: block; }
