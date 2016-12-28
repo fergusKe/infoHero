@@ -341,97 +341,185 @@
 
     /*nav*/
     function setNav() {
-      var navTitle = $('.nav-title');
-      var navListBox = $('.nav-list-box');
-      var navListBoxLi = $('.nav-list-box li');
-      var navList = $('.nav-list');
-      var navListBoxMaxHeight = 180;
-      var navList1_H = $('.nav-title1-list-box').height();
-      var navList2_H = $('.nav-title2-list-box').height();
-      var navList3_H = $('.nav-title3-list-box').height();
-      var navList4_H = $('.nav-title4-list-box').height();
+        var navTitle = $('.nav-title');
+        var navListBox = $('.nav-list-box');
+        var navListBoxLi = $('.nav-list-box li');
+        var navList = $('.nav-list');
+        var navListBoxMaxHeight = 180;
+        var navList1_H = $('.nav-title1-list-box').height();
+        var navList2_H = $('.nav-title2-list-box').height();
+        var navList3_H = $('.nav-title3-list-box').height();
+        var navList4_H = $(window).height() / 2;
+        
+        $('.nav-title4-list-box').css({
+          'max-height': navList4_H
+        });
 
-      var navListHeightArr = [navList1_H, navList2_H, navList3_H, navList4_H];
-      var navNowIndex = 0;
-      var navObj = {
-        index: 0,
-        dropdown: [{
-          name: 'title1',
-          show: 0
-        },{
-          name: 'title2',
-          show: 0
-        },{
-          name: 'title3',
-          show: 0
-        },{
-          name: 'title4',
-          show: 0
-        }]
-      }
-      var navHoverShowHeight = 5;
-      var showObj = {
-        display: 'block'
-      }
-      var hideObj = {
-        display: 'none'
-      }
-      navTitle.hover(function() {
-        navNowIndex = $(this).index();
-        navTitle.removeClass('active').eq(navNowIndex).addClass('active');
-
-        navListBox.css( hideObj ).eq(navNowIndex).css({
+        var navListHeightArr = [navList1_H, navList2_H, navList3_H, navList4_H];
+        console.log('navListHeightArr = ', navListHeightArr);
+        var navNowIndex = 0;
+        var navObj = {
+          index: 0,
+          dropdown: [{
+            name: 'title1',
+            show: 0
+          },{
+            name: 'title2',
+            show: 0
+          },{
+            name: 'title3',
+            show: 0
+          },{
+            name: 'title4',
+            show: 0
+          }]
+        }
+        var navHoverShowHeight = 5;
+        var showObj = {
           display: 'block'
-        });
-        if (navNowIndex == 3) {
-          $('.nav-list-box').eq(navNowIndex).css({
-            'overflow-y': 'hidden'
+        }
+        var hideObj = {
+          display: 'none'
+        }
+        navTitle.hover(function() {
+          navNowIndex = $(this).index();
+          navTitle.removeClass('active').eq(navNowIndex).addClass('active');
+
+          navListBox.css( hideObj ).eq(navNowIndex).css({
+            display: 'block'
           });
-        }
-        var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
+          if (navNowIndex == 3) {
+            $('.nav-list-box').eq(navNowIndex).css({
+              'overflow-y': 'hidden'
+            });
+          }
+          // var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
 
-        if (nowNavListBoxHeight > 180) {
-          nowNavListBoxHeight = 180;
-        }
-        navListHeightArr[navNowIndex] = nowNavListBoxHeight;
+          // if (nowNavListBoxHeight > 180) {
+          //   nowNavListBoxHeight = 180;
+          // }
+          // navListHeightArr[navNowIndex] = nowNavListBoxHeight;
 
-        navListBox.eq(navNowIndex).css({
-          top: -navListHeightArr[navNowIndex] + navHoverShowHeight
-        });
-      }, function() {
-        navTitle.removeClass('active');
-        navObj.index = navNowIndex;
-        navObj.dropdown[navObj.index].show = 0;
-        navListBox.eq(navObj.index).css( hideObj );
-      });
-      navListBox.hover(function() {
-        $(this).css( showObj );
-        navTitle.removeClass('active').eq(navNowIndex).addClass('active');
-        if (navNowIndex == 3) {
-          $('.nav-list-box').eq(navNowIndex).css({
-            'overflow-y': 'auto'
-          });
-        }
-      }, function() {
-        navListBox.eq(navObj.index).css( hideObj );
-        navObj.dropdown[navObj.index].show = 0;
-        navTitle.removeClass('active');
-      });
-
-      var _navListShow_TL = new Array(4);
-      navTitle.click(function() {
-        var navLi = navListBox.eq(navNowIndex).find('li');
-        var navLiLength = navLi.length;
-        navNowIndex = $(this).index();
-
-        if( navObj.dropdown[navObj.index].show === 1 ) {
-          TweenMax.to(navListBox.eq(navNowIndex), .3, {
+          navListBox.eq(navNowIndex).css({
             top: -navListHeightArr[navNowIndex] + navHoverShowHeight
           });
-
-          navObj.dropdown[navNowIndex].show = 0;
+        }, function() {
+          navTitle.removeClass('active');
           navObj.index = navNowIndex;
-        } else {
+          navObj.dropdown[navObj.index].show = 0;
+          navListBox.eq(navObj.index).css( hideObj );
+        });
+        navListBox.hover(function() {
+          $(this).css( showObj );
+          navTitle.removeClass('active').eq(navNowIndex).addClass('active');
+          if (navNowIndex == 3) {
+            $('.nav-list-box').eq(navNowIndex).css({
+              'overflow-y': 'auto'
+            });
+          }
+        }, function() {
+          navListBox.eq(navObj.index).css( hideObj );
+          navObj.dropdown[navObj.index].show = 0;
+          navTitle.removeClass('active');
+        });
+
+        var _navListShow_TL = new Array(4);
+        navTitle.click(function() {
+          var navLi = navListBox.eq(navNowIndex).find('li');
+          var navLiLength = navLi.length;
+          navNowIndex = $(this).index();
+          console.log('navNowIndex = ', navNowIndex);
+
+          if( navObj.dropdown[navObj.index].show === 1 ) {
+            TweenMax.to(navListBox.eq(navNowIndex), .3, {
+              top: -navListHeightArr[navNowIndex] + navHoverShowHeight
+            });
+
+            navObj.dropdown[navNowIndex].show = 0;
+            navObj.index = navNowIndex;
+          } else {
+            TweenMax.to(navListBox.eq(navNowIndex), .3, {
+              top: 0,
+              onComplete: function() {
+
+              }
+            });
+
+            if (!_navListShow_TL[navNowIndex]) {
+              _navListShow_TL[navNowIndex] = new TimelineLite();
+              if (navNowIndex == 3) {
+                // navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+
+                _navListShow_TL[navNowIndex].add(function() {
+                  $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
+                  // navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+                })
+                // _navListShow_TL[navNowIndex].add(
+                //     TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+                //     delay: .3,
+                //     top: 30,
+                //     opacity: 0
+                //   }, .05)
+                // )
+                _navListShow_TL[navNowIndex].add(
+                  TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
+                    top: 30,
+                    opacity: 0
+                  }, {
+                    top: 0,
+                    opacity: 1
+                  }), "-=0.3"
+                )
+              } else {
+                _navListShow_TL[navNowIndex].add(
+                    TweenMax.staggerFrom(navLi, .3, {
+                    delay: .3,
+                    top: 30,
+                    opacity: 0
+                  }, .05)
+                )
+              }
+            }
+            _navListShow_TL[navNowIndex].restart();
+
+            navObj.dropdown[navObj.index].show = 0;
+            navObj.dropdown[navNowIndex].show = 1;
+            navObj.index = navNowIndex;
+          };
+        });
+        navListBox.on('click', 'li', function() {
+          $(this).addClass('active').siblings('li').removeClass('active');
+        });
+
+        // 點擊選單
+        $('.nav-title3-list li').click(function() {
+          if ($(this).hasClass('active')) return;
+          var area = $(this).text();
+          var name = '';
+          var j_navVillageCont =  $('.nav-title4-list');
+          j_navVillageCont.find('li').remove();
+          for ( var i = 0; i < TaipeiAreaObj[area].length; i++ ) {
+              name = TaipeiAreaObj[area][i].properties.Substitute;
+              j_navVillageCont.append( "<li><a href=\"village.html\">" + name + "</a></li>" );
+          }
+          _navListShow_TL[3] = false;
+          
+          
+        
+          // ==================================
+          $('.nav-title4').addClass('active').siblings().removeClass('active');
+          TweenMax.to(navListBox.eq(2), .3, {
+            top: -1000
+          });
+
+          // navObj.dropdown[navNowIndex].show = 0;
+          // navObj.index = navNowIndex;
+          
+          $('.nav-title4').click();
+          
+          $('.nav-title4-list-box').css( showObj );
+          
+          navNowIndex = 3;
           TweenMax.to(navListBox.eq(navNowIndex), .3, {
             top: 0,
             onComplete: function() {
@@ -439,67 +527,62 @@
             }
           });
 
-          if (!_navListShow_TL[navNowIndex]) {
-            _navListShow_TL[navNowIndex] = new TimelineLite();
-            if (navNowIndex == 3) {
-              navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+          // _navListShow_TL[navNowIndex] = new TimelineLite();
+          // if (navNowIndex == 3) {
+          //   navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
 
-              _navListShow_TL[navNowIndex].add(function() {
-                $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
-                navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
-              })
-              _navListShow_TL[navNowIndex].add(
-                  TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
-                  delay: .3,
-                  top: 30,
-                  opacity: 0
-                }, .05)
-              )
-              _navListShow_TL[navNowIndex].add(
-                TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
-                  top: 30,
-                  opacity: 0
-                }, {
-                  top: 0,
-                  opacity: 1
-                }), "-=0.3"
-              )
-            } else {
-              _navListShow_TL[navNowIndex].add(
-                  TweenMax.staggerFrom(navLi, .3, {
-                  delay: .3,
-                  top: 30,
-                  opacity: 0
-                }, .05)
-              )
-            }
-          }
-          _navListShow_TL[navNowIndex].restart();
+          //   _navListShow_TL[navNowIndex].add(function() {
+          //     $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
+          //     navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+          //   })
+          //   _navListShow_TL[navNowIndex].add(
+          //       TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+          //       delay: .3,
+          //       top: 30,
+          //       opacity: 0
+          //     }, .05)
+          //   )
+          //   _navListShow_TL[navNowIndex].add(
+          //     TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
+          //       top: 30,
+          //       opacity: 0
+          //     }, {
+          //       top: 0,
+          //       opacity: 1
+          //     }), "-=0.3"
+          //   )
+          // } else {
+          //   _navListShow_TL[navNowIndex].add(
+          //       TweenMax.staggerFrom(navLi, .3, {
+          //       delay: .3,
+          //       top: 30,
+          //       opacity: 0
+          //     }, .05)
+          //   )
+          // }
+          // _navListShow_TL[navNowIndex].restart();
 
-          navObj.dropdown[navObj.index].show = 0;
-          navObj.dropdown[navNowIndex].show = 1;
-          navObj.index = navNowIndex;
-        };
-      });
-      navListBox.on('click', 'li', function() {
-        $(this).addClass('active').siblings('li').removeClass('active');
-      });
-
-      // nav-data
-      $('.nav-title3-list li').click(function() {
-        if ($(this).hasClass('active')) return;
-        var area = $(this).text();
-        var name = '';
-        var j_navVillageCont =  $('.nav-title4-list');
-        j_navVillageCont.find('li').remove();
-        for ( var i = 0; i < TaipeiAreaObj[area].length; i++ ) {
-            name = TaipeiAreaObj[area][i].properties.Substitute;
-            j_navVillageCont.append( "<li><a href=\"village.html\">" + name + "</a></li>" );
+          // navObj.dropdown[navObj.index].show = 0;
+          // navObj.dropdown[navNowIndex].show = 1;
+          // navObj.index = navNowIndex;
+          
+          _navListShow_TL[3] = false;
+          // ==================================
+        });
+        
+        // $('.nav-title3-list li').eq(0).click();
+        for ( var i = 0; i < TaipeiAreaObj['全部'].length; i++ ) {
+            name = TaipeiAreaObj['全部'][i].properties.Substitute;
+            $('.nav-title4-list').append( "<li><a href=\"village.html\">" + name + "</a></li>" );
         }
-        _navListShow_TL[3] = false;
-      });
-      $('.nav-title3-list li').eq(0).click();
-    }
+        
+
+        $('.nav-title4-list').on('click', 'li', function(e) {
+          var villageName;
+          villageName = $(this).text();
+          store.set('villageName', villageName);
+        });
+      }
 
     var swap = function(data, i, j){
         var tmp = data[i];
