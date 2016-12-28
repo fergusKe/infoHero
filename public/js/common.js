@@ -188,9 +188,14 @@
         var navList1_H = $('.nav-title1-list-box').height();
         var navList2_H = $('.nav-title2-list-box').height();
         var navList3_H = $('.nav-title3-list-box').height();
-        var navList4_H = $('.nav-title4-list-box').height();
+        var navList4_H = $(window).height() / 2;
+        
+        $('.nav-title4-list-box').css({
+          'max-height': navList4_H
+        });
 
         var navListHeightArr = [navList1_H, navList2_H, navList3_H, navList4_H];
+        console.log('navListHeightArr = ', navListHeightArr);
         var navNowIndex = 0;
         var navObj = {
           index: 0,
@@ -227,12 +232,12 @@
               'overflow-y': 'hidden'
             });
           }
-          var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
+          // var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
 
-          if (nowNavListBoxHeight > 180) {
-            nowNavListBoxHeight = 180;
-          }
-          navListHeightArr[navNowIndex] = nowNavListBoxHeight;
+          // if (nowNavListBoxHeight > 180) {
+          //   nowNavListBoxHeight = 180;
+          // }
+          // navListHeightArr[navNowIndex] = nowNavListBoxHeight;
 
           navListBox.eq(navNowIndex).css({
             top: -navListHeightArr[navNowIndex] + navHoverShowHeight
@@ -262,6 +267,7 @@
           var navLi = navListBox.eq(navNowIndex).find('li');
           var navLiLength = navLi.length;
           navNowIndex = $(this).index();
+          console.log('navNowIndex = ', navNowIndex);
 
           if( navObj.dropdown[navObj.index].show === 1 ) {
             TweenMax.to(navListBox.eq(navNowIndex), .3, {
@@ -281,19 +287,19 @@
             if (!_navListShow_TL[navNowIndex]) {
               _navListShow_TL[navNowIndex] = new TimelineLite();
               if (navNowIndex == 3) {
-                navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+                // navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
 
                 _navListShow_TL[navNowIndex].add(function() {
                   $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
-                  navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+                  // navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
                 })
-                _navListShow_TL[navNowIndex].add(
-                    TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
-                    delay: .3,
-                    top: 30,
-                    opacity: 0
-                  }, .05)
-                )
+                // _navListShow_TL[navNowIndex].add(
+                //     TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+                //     delay: .3,
+                //     top: 30,
+                //     opacity: 0
+                //   }, .05)
+                // )
                 _navListShow_TL[navNowIndex].add(
                   TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
                     top: 30,
@@ -336,8 +342,79 @@
               j_navVillageCont.append( "<li><a href=\"village.html\">" + name + "</a></li>" );
           }
           _navListShow_TL[3] = false;
+          
+          
+        
+          // ==================================
+          $('.nav-title4').addClass('active').siblings().removeClass('active');
+          TweenMax.to(navListBox.eq(2), .3, {
+            top: -1000
+          });
+
+          // navObj.dropdown[navNowIndex].show = 0;
+          // navObj.index = navNowIndex;
+          
+          $('.nav-title4').click();
+          
+          $('.nav-title4-list-box').css( showObj );
+          
+          navNowIndex = 3;
+          TweenMax.to(navListBox.eq(navNowIndex), .3, {
+            top: 0,
+            onComplete: function() {
+
+            }
+          });
+
+          // _navListShow_TL[navNowIndex] = new TimelineLite();
+          // if (navNowIndex == 3) {
+          //   navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
+
+          //   _navListShow_TL[navNowIndex].add(function() {
+          //     $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
+          //     navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
+          //   })
+          //   _navListShow_TL[navNowIndex].add(
+          //       TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
+          //       delay: .3,
+          //       top: 30,
+          //       opacity: 0
+          //     }, .05)
+          //   )
+          //   _navListShow_TL[navNowIndex].add(
+          //     TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
+          //       top: 30,
+          //       opacity: 0
+          //     }, {
+          //       top: 0,
+          //       opacity: 1
+          //     }), "-=0.3"
+          //   )
+          // } else {
+          //   _navListShow_TL[navNowIndex].add(
+          //       TweenMax.staggerFrom(navLi, .3, {
+          //       delay: .3,
+          //       top: 30,
+          //       opacity: 0
+          //     }, .05)
+          //   )
+          // }
+          // _navListShow_TL[navNowIndex].restart();
+
+          // navObj.dropdown[navObj.index].show = 0;
+          // navObj.dropdown[navNowIndex].show = 1;
+          // navObj.index = navNowIndex;
+          
+          _navListShow_TL[3] = false;
+          // ==================================
         });
-        $('.nav-title3-list li').eq(0).click();
+        
+        // $('.nav-title3-list li').eq(0).click();
+        for ( var i = 0; i < TaipeiAreaObj['全部'].length; i++ ) {
+            name = TaipeiAreaObj['全部'][i].properties.Substitute;
+            $('.nav-title4-list').append( "<li><a href=\"village.html\">" + name + "</a></li>" );
+        }
+        
 
         $('.nav-title4-list').on('click', 'li', function(e) {
           var villageName;
