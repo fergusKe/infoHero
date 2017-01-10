@@ -26,37 +26,6 @@
     $('.village-num').text(village['各里總案件數']);
 
     console.log('villageName = ', villageName);
-    // console.log('village = ', village);
-
-
-
-
-    // var index;
-    // if (locationType == 'all' || locationType == undefined) {
-    //   for (var i = 0; i < pData.length; i++) {
-    //     if (pData[i]['案件類型'] === '全部案件類型') {
-    //       index = i;
-    //     }
-    //   }
-    // } else if (locationType == 'old') {
-    //   for (var i = 0; i < pData.length; i++) {
-    //     if (pData[i]['案件類型'] === '老人保護') {
-    //       index = i;
-    //     }
-    //   }
-    // } else if (locationType == 'children') {
-    //   for (var i = 0; i < pData.length; i++) {
-    //     if (pData[i]['案件類型'] === '兒少保護') {
-    //       index = i;
-    //     }
-    //   }
-    // } else if (locationType == 'intimate') {
-    //   for (var i = 0; i < pData.length; i++) {
-    //     if (pData[i]['案件類型'] === '親密關係') {
-    //       index = i;
-    //     }
-    //   }
-    // }
 
     chartType(village);
     chartGender(village);
@@ -64,7 +33,6 @@
 
   }
   function chartType(pData) {
-      // console.log('pData = ', pData);
     // d3.csv("data/case_type.csv", stringToNum, function(pData) {
       var barWidth = 129;
       var old = pData['老人保護Rank'];
@@ -75,23 +43,22 @@
       var disabled = pData['障礙Rank'];
       $('.rank-old .mark-icon').css({
         left: old / 100 * 129
-      })
+      });
       $('.rank-children .mark-icon').css({
         left: children / 100 * 129
-      })
+      });
       $('.rank-intimate .mark-icon').css({
         left: intimate / 100 * 129
-      })
+      });
       $('.rank-other .mark-icon').css({
         left: other / 100 * 129
-      })
+      });
       $('.rank-LowIncome .mark-icon').css({
         left: LowIncome / 100 * 129
-      })
+      });
       $('.rank-disabled .mark-icon').css({
         left: disabled / 100 * 129
-      })
-
+      });
 
       var data = [
         {type: '老人保護', value: +pData['老人保護']},
@@ -185,11 +152,31 @@
     // });
 
   }
+  function adjustVal(data) {
+    var dataArr = [];
+    var totalVal = 0;
+    var maxVal = data[0].value;
+    var maxIndex = 0;
+    var difference = 0;
+    for(var i = 0; i < data.length; i++) {
+      dataArr.push(data[i].value);
+      totalVal += data[i].value;
+      if (data[i].value > maxVal) {
+        maxIndex = i;
+        maxVal = data[i].value;
+      }
+    }
+    difference = 100 - totalVal;
+    data[maxIndex].value += difference;
+    return data;
+  }
   function chartGender(pData) {
     var data = [
       {type: '男', value: Math.floor( +pData['男'] )},
       {type: '女', value: Math.floor( +pData['女'] )}
-    ]
+    ];
+    data = adjustVal(data);
+
     var width = 130,
         height = 140,
         margin = {left: 50, top: 30, right: 30, bottom: 30},
@@ -253,6 +240,7 @@
         {type: '18~65', value: Math.floor( +pData['18到65歲'] )},
         {type: '65~', value: Math.floor( +pData['大於65歲'] )}
       ];
+      data = adjustVal(data);
 
       var width = 130,
         height = 140,

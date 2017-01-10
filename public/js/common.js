@@ -42,29 +42,29 @@
       if (location.pathname == "/type.html") {
         if (locationType == 'all' || locationType == undefined) {
           caseType = "各里總案件數";
-          $('.type-name').text('全部');
-          $('.type-num').text(8928);
-          $('.nav-title2-list-box li').eq(0).addClass('active');
+          // $('.type-name').text('全部');
+          // $('.type-num').text(8928);
+          // $('.nav-title2-list-box li').eq(0).addClass('active');
         } else if (locationType == 'old') {
           caseType = "老人保護";
-          $('.type-name').text(caseType);
-          $('.type-num').text(541);
-          $('.nav-title2-list-box li').eq(1).addClass('active');
+          // $('.type-name').text(caseType);
+          // $('.type-num').text(541);
+          // $('.nav-title2-list-box li').eq(1).addClass('active');
         } else if (locationType == 'children') {
           caseType = "兒少保護";
-          $('.type-name').text(caseType);
-          $('.type-num').text(681);
-          $('.nav-title2-list-box li').eq(2).addClass('active');
+          // $('.type-name').text(caseType);
+          // $('.type-num').text(681);
+          // $('.nav-title2-list-box li').eq(2).addClass('active');
         } else if (locationType == 'intimate') {
           caseType = "親密關係";
-          $('.type-name').text(caseType);
-          $('.type-num').text(4662);
-          $('.nav-title2-list-box li').eq(3).addClass('active');
+          // $('.type-name').text(caseType);
+          // $('.type-num').text(4662);
+          // $('.nav-title2-list-box li').eq(3).addClass('active');
         } else if (locationType == 'other') {
           caseType = "兄弟姊妹間暴力";
-          $('.type-name').text('其他家虐');
-          $('.type-num').text(315);
-          $('.nav-title2-list-box li').eq(4).addClass('active');
+          // $('.type-name').text('其他家虐');
+          // $('.type-num').text(315);
+          // $('.nav-title2-list-box li').eq(4).addClass('active');
         }
       }
 
@@ -79,7 +79,7 @@
             if (village) {
               village = village.replace("台","臺");
               result[village] = result[village] || {};
-              result[village]["兄弟姊妹間暴力"] = +caseVillage[i]["兄弟姊妹間暴力"].replace("%", "") || 0;
+              result[village]["兄弟姊妹間暴力"] = (+caseVillage[i]["兄弟姊妹間暴力"].replace("%", "") || 0) + (+caseVillage[i]["其他家虐"].replace("%", "") || 0);
               result[village]["老人保護"] = +caseVillage[i]["老人保護"].replace("%", "") || 0;
               result[village]["兒少保護"] = +caseVillage[i]["兒少保護"].replace("%", "") || 0;
               result[village]["親密關係"] = +caseVillage[i]["親密關係"].replace("%", "") || 0;
@@ -89,7 +89,7 @@
               result[village]["18到65歲"] = +caseVillage[i]["18到65歲"].replace("%", "") || 0;
               result[village]["大於65歲"] = +caseVillage[i]["大於65歲"].replace("%", "") || 0;
               result[village]["各里總案件數"] = +caseVillage[i]["各里總案件數"].replace("%", "") || 0;
-              result[village]["兄弟姊妹間暴力Rank"] = +caseVillage[i]["兄弟姊妹間暴力Rank"].replace("%", "") || 0;
+              result[village]["兄弟姊妹間暴力Rank"] = (+caseVillage[i]["兄弟姊妹間暴力Rank"].replace("%", "") || 0) +  + (+caseVillage[i]["其他家虐Rank"].replace("%", "") || 0);
               result[village]["老人保護Rank"] = +caseVillage[i]["老人保護Rank"].replace("%", "") || 0;
               result[village]["兒少保護Rank"] = +caseVillage[i]["兒少保護Rank"].replace("%", "") || 0;
               result[village]["親密關係Rank"] = +caseVillage[i]["親密關係Rank"].replace("%", "") || 0;
@@ -189,13 +189,12 @@
         var navList2_H = $('.nav-title2-list-box').height();
         var navList3_H = $('.nav-title3-list-box').height();
         var navList4_H = $(window).height() / 2;
-        
+
         $('.nav-title4-list-box').css({
           'max-height': navList4_H
         });
 
         var navListHeightArr = [navList1_H, navList2_H, navList3_H, navList4_H];
-        console.log('navListHeightArr = ', navListHeightArr);
         var navNowIndex = 0;
         var navObj = {
           index: 0,
@@ -232,13 +231,6 @@
               'overflow-y': 'hidden'
             });
           }
-          // var nowNavListBoxHeight = navListBox.eq(navNowIndex).find('ul').outerHeight(true);
-
-          // if (nowNavListBoxHeight > 180) {
-          //   nowNavListBoxHeight = 180;
-          // }
-          // navListHeightArr[navNowIndex] = nowNavListBoxHeight;
-
           navListBox.eq(navNowIndex).css({
             top: -navListHeightArr[navNowIndex] + navHoverShowHeight
           });
@@ -287,19 +279,9 @@
             if (!_navListShow_TL[navNowIndex]) {
               _navListShow_TL[navNowIndex] = new TimelineLite();
               if (navNowIndex == 3) {
-                // navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
-
                 _navListShow_TL[navNowIndex].add(function() {
                   $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
-                  // navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
                 })
-                // _navListShow_TL[navNowIndex].add(
-                //     TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
-                //     delay: .3,
-                //     top: 30,
-                //     opacity: 0
-                //   }, .05)
-                // )
                 _navListShow_TL[navNowIndex].add(
                   TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
                     top: 30,
@@ -342,9 +324,9 @@
               j_navVillageCont.append( "<li><a href=\"village.html\">" + name + "</a></li>" );
           }
           _navListShow_TL[3] = false;
-          
-          
-        
+
+
+
           // ==================================
           $('.nav-title4').addClass('active').siblings().removeClass('active');
           TweenMax.to(navListBox.eq(2), .3, {
@@ -353,11 +335,11 @@
 
           // navObj.dropdown[navNowIndex].show = 0;
           // navObj.index = navNowIndex;
-          
+
           $('.nav-title4').click();
-          
+
           $('.nav-title4-list-box').css( showObj );
-          
+
           navNowIndex = 3;
           TweenMax.to(navListBox.eq(navNowIndex), .3, {
             top: 0,
@@ -366,55 +348,16 @@
             }
           });
 
-          // _navListShow_TL[navNowIndex] = new TimelineLite();
-          // if (navNowIndex == 3) {
-          //   navListBox.eq(navNowIndex).find('li:lt(12)').addClass('show');
-
-          //   _navListShow_TL[navNowIndex].add(function() {
-          //     $('.nav-title4-list-box').animate({scrollTop: 0}, 0);
-          //     navListBox.eq(navNowIndex).find('li:not(.show)').css({opacity: 0});
-          //   })
-          //   _navListShow_TL[navNowIndex].add(
-          //       TweenMax.staggerFrom(navListBox.eq(navNowIndex).find('li.show'), .3, {
-          //       delay: .3,
-          //       top: 30,
-          //       opacity: 0
-          //     }, .05)
-          //   )
-          //   _navListShow_TL[navNowIndex].add(
-          //     TweenMax.fromTo(navListBox.eq(navNowIndex).find('li:not(.show)'), .3, {
-          //       top: 30,
-          //       opacity: 0
-          //     }, {
-          //       top: 0,
-          //       opacity: 1
-          //     }), "-=0.3"
-          //   )
-          // } else {
-          //   _navListShow_TL[navNowIndex].add(
-          //       TweenMax.staggerFrom(navLi, .3, {
-          //       delay: .3,
-          //       top: 30,
-          //       opacity: 0
-          //     }, .05)
-          //   )
-          // }
-          // _navListShow_TL[navNowIndex].restart();
-
-          // navObj.dropdown[navObj.index].show = 0;
-          // navObj.dropdown[navNowIndex].show = 1;
-          // navObj.index = navNowIndex;
-          
           _navListShow_TL[3] = false;
           // ==================================
         });
-        
+
         // $('.nav-title3-list li').eq(0).click();
         for ( var i = 0; i < TaipeiAreaObj['全部'].length; i++ ) {
             name = TaipeiAreaObj['全部'][i].properties.Substitute;
             $('.nav-title4-list').append( "<li><a href=\"village.html\">" + name + "</a></li>" );
         }
-        
+
 
         $('.nav-title4-list').on('click', 'li', function(e) {
           var villageName;
@@ -576,6 +519,8 @@
              grades = [0, 20, 40, 60, 80, 100];
              grades_data = [1, 11, 16, 21, 26, 65];
          }
+
+         labels.push('<span style="display: inline-block; margin-bottom: 5px;">案件數相對比例</span>');
 
   			 for (var i = 0; i < grades.length - 1; i++) {
   				 from = grades[i];
