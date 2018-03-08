@@ -369,8 +369,7 @@
       /*heat-map*/
       function setMap() {
   			var map = L.map('map').setView([25.08112, 121.5602], 11);
-
-  			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+  			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamluZ3RhaSIsImEiOiJjaXRqaWo4aHAwOG8zMm9ta2VreXZndGF3In0.hyQPm7h5ntK-AlLJuYKYhw', {
   				maxZoom: 18,
   				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
   					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -401,32 +400,32 @@
           var color;
           switch(locationType) {
             case 'old':
-              color = d >= 3 ? '#5A0000' :
-                        d >= 2 ? '#9C0000' :
-                                 '#FF7D84';
+              color = d >= 3 ? '#550088' :
+                        d >= 2 ? '#7700BB' :
+                                 '#9900FF';
               break;
             case 'children':
-              color = d >= 3 ? '#5A0000' :
-                        d >= 2 ? '#9C0000' :
-                                 '#FF7D84';
+              color = d >= 3 ? '#550088' :
+                        d >= 2 ? '#7700BB' :
+                                 '#9900FF';
               break;
             case 'intimate':
-              color = d >= 14 ? '#5A0000' :
-                        d >= 11 ? '#9C0000' :
-                        d >= 8 ? '#DE1021' :
-                        d >= 6 ? '#FF4D52' :
-                                 '#FF7D84';
+              color = d >= 14 ? '#550088' :
+                        d >= 11 ? '#7700BB' :
+                        d >= 8 ? '#9900FF' :
+                        d >= 6 ? '#B94FFF' :
+                                 '#D28EFF';
               break;
             case 'other':
-              color = d >= 2 ? '#5A0000' :
-                              '#FF7D84';
+              color = d >= 2 ? '#550088' :
+                              '#9900FF';
               break;
             default:
-              color = d >= 26 ? '#5A0000' :
-                        d >= 21 ? '#9C0000' :
-                        d >= 16 ? '#DE1021' :
-                        d >= 11 ? '#FF4D52' :
-                                 '#FF7D84';
+              color = d >= 26 ? '#550088' :
+                        d >= 21 ? '#7700BB' :
+                        d >= 16 ? '#9900FF' :
+                        d >= 11 ? '#B94FFF' :
+                                 '#D28EFF';
           }
   				return color;
   			}

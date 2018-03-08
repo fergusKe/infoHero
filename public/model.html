@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/lib/normalize.css">
+  <link rel="stylesheet" href="./css/lib/leaflet.css" />
+  <link rel="stylesheet" href="./css/lib/fakeLoader.css">
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/model.css">
+  <title>家防案件預警及風險管理系統</title>
+  <script src="./js/lib/jquery-1.9.1.min.js"></script>
+  <script src="./js/lib/store.js"></script>
+  <script src="./js/lib/greensock/TweenMax.min.js"></script>
+  <script src="./js/lib/fakeLoader.js"></script>
+  <script src="./js/lib/leaflet.js"></script>
+  <script src="./js/lib/d3.v3.min.js"></script>
+  <script src="./js/lib/topojson.v1.min.js"></script>
+
+  <script src="./js/common.js"></script>
+  <script src="./js/model.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="fakeloader"></div>
+    <div class="header">
+      <h1 class="h-title">
+        <a href="index.html">台北市家庭暴力防治 受害者熱區地圖</a>
+      </h1>
+      <div class="nav">
+        <ul class="navCont">
+          <li class="nav-title1 nav-title">
+            <a href="javascript:;">圖表樣式</a>
+          </li>
+          <li class="nav-title2 nav-title">
+            <a href="javascript:;">案件類型</a>
+          </li>
+          <li class="nav-title3 nav-title">
+            <a href="javascript:;">行政區</a>
+          </li>
+          <li class="nav-title4 nav-title">
+            <a href="javascript:;">里</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="content">
+        <div class = "risk-score-panel">
+          <div class="header">
+            <h3 class="title">
+              個案風險指標評估
+            </h3>
+          </div>
+          <div class="body">
+            <div class = "download col-md-6 panel" id = "download">
+              <div class="body">
+                請在此下載csv格式表格，依照內容填入！  
+              </div>
+              <div class="footer">
+                <a href="/infoHero_heatmap/model/testcases/template_v1.csv" target="_blank">
+                  <button class="btn btn-info">下載表格</button>    
+                </a>
+              </div>
+            </div>
+            <div class = "upload col-md-6 panel" id = "upload">
+              <div class="body">
+                請在此上傳填好的csv表格！  
+              </div>
+              <div class="footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,13 +1,1 @@
-.main {
-  min-width: 1070px; }
-
-.header {
-  min-width: 1070px; }
-
-.content {
-  width: 1070px; }
-
-.list {
-  width: 270px; }
-  .list.village-top10 ul {
-    width: 116px; }
+.header,.main{min-width:1070px}.content{width:1070px}.list{width:270px}.list.village-top10 ul{width:116px}
